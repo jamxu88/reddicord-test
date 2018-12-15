@@ -20,6 +20,7 @@ client.on('messageReactionAdd', (reaction, user, message) => {
       const key = `${reaction.message.author.id}`;
         client.karma.ensure(key, {
         user: reaction.message.author.id,
+        guild: message.guild.id,
         karma: 0
       });
       client.karma.dec(key, "karma");
@@ -29,6 +30,7 @@ client.on('messageReactionAdd', (reaction, user, message) => {
         const key = `${reaction.message.author.id}`;
           client.karma.ensure(key, {
           user: reaction.message.author.id,
+          guild: message.guild.id,
           karma: 0
         });
         client.karma.inc(key, "karma");
@@ -38,6 +40,7 @@ client.on('messageReactionAdd', (reaction, user, message) => {
       const key = `${reaction.message.author.id}`;
       client.karma.ensure(key, {
         user: reaction.message.author.id,
+        guild: message.guild.id,
         karma: 0
       });
       client.karma.inc(key, "karma");
@@ -47,6 +50,7 @@ client.on('messageReactionAdd', (reaction, user, message) => {
       const key = `${reaction.message.author.id}`;
         client.karma.ensure(key, {
         user: reaction.message.author.id,
+        guild: message.guild.id,
         karma: 0
       });
       client.karma.dec(key, "karma");
@@ -58,6 +62,7 @@ client.on('messageReactionRemove', (reaction, user, message) => {
         const key = `${reaction.message.author.id}`;
         client.karma.ensure(key, {
           user: reaction.message.author.id,
+          guild: message.guild.id,
           karma: 0
         });
         client.karma.inc(key, "karma");
@@ -67,6 +72,7 @@ client.on('messageReactionRemove', (reaction, user, message) => {
         const key = `${reaction.message.author.id}`;
           client.karma.ensure(key, {
           user: reaction.message.author.id,
+          guild: message.guild.id,
           karma: 0
         });
         client.karma.dec(key, "karma");
@@ -76,6 +82,7 @@ client.on('messageReactionRemove', (reaction, user, message) => {
         const key = `${reaction.message.author.id}`;
         client.karma.ensure(key, {
           user: reaction.message.author.id,
+          guild: message.guild.id,
           karma: 0
         });
         client.karma.dec(key, "karma");
@@ -85,12 +92,13 @@ client.on('messageReactionRemove', (reaction, user, message) => {
         const key = `${reaction.message.author.id}`;
           client.karma.ensure(key, {
           user: reaction.message.author.id,
+          guild: message.guild.id,
           karma: 0
         });
         client.karma.inc(key, "karma");
     }
 });
-const prefix = "!&"
+const prefix = "&"
 client.on("message", (message) => {
 function react() {
   message.react("🔽");
@@ -149,7 +157,7 @@ if (message.content.startsWith(prefix + "ping")) {
     message.react("🔼");
   }else
   if(message.content.startsWith(prefix + "guild")){
-    const filtered = client.karma.filter( p => p.guild === message.guild.id ).array();
+    const filtered = client.karma.filter( karma => karma.guild === message.guild.id ).array();
     const sorted = filtered.sort((a, b) => a.karma - b.karma);
     const top = sorted.splice(0,10);
     const embed = new Discord.RichEmbed()
