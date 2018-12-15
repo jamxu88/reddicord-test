@@ -90,7 +90,7 @@ client.on('messageReactionRemove', (reaction, user, message) => {
         client.karma.inc(key, "karma");
     }
 });
-const prefix = "&"
+const prefix = "&&"
 client.on("message", (message) => {
 function react() {
   message.react("🔽");
