@@ -17,13 +17,15 @@ client.on("ready", () => {
 client.on('messageReactionAdd', (reaction, user, message, guild) => {
   if(reaction.emoji.name === "🔼") {
     if (user.id === reaction.message.author.id) {
-      const key = `${message.guild.id}-${reaction.message.author.id}`;
-        client.karma.ensure(key, {
-        user: reaction.message.author.id,
-        guild: message.guild.id,
-        karma: 0
-      });
-      client.karma.dec(key, "karma");
+      if (message.guild){
+        const key = `${message.guild.id}-${reaction.message.author.id}`;
+          client.karma.ensure(key, {
+          user: reaction.message.author.id,
+          guild: message.guild.id,
+          karma: 0
+        });
+        client.karma.dec(key, "karma");
+      }
       }else
         console.log(reaction.message.author.id);
         globalreacts += 1;
@@ -98,7 +100,7 @@ client.on('messageReactionRemove', (reaction, user, message, guild) => {
         client.karma.inc(key, "karma");
     }
 });
-const prefix = "&&"
+const prefix = "&"
 client.on("message", (message) => {
 function react() {
   message.react("🔽");
