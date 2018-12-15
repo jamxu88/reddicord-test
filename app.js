@@ -14,7 +14,7 @@ client.on("ready", () => {
   console.log("Data Not Loaded");
   }
 });
-client.on('messageReactionAdd', (reaction, user, message) => {
+client.on('messageReactionAdd', (reaction, user, message, guild) => {
   if(reaction.emoji.name === "🔼") {
     if (user.id === reaction.message.author.id) {
       const key = `${reaction.message.author.id}`;
@@ -56,7 +56,7 @@ client.on('messageReactionAdd', (reaction, user, message) => {
       client.karma.dec(key, "karma");
   } 
 });
-client.on('messageReactionRemove', (reaction, user, message) => {
+client.on('messageReactionRemove', (reaction, user, message, guild) => {
     if(reaction.emoji.name === "🔼") {
       if (user.id === reaction.message.author.id) {
         const key = `${reaction.message.author.id}`;
