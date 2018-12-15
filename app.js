@@ -7,7 +7,7 @@ client.karma = new Enmap({name: 'test' });
 
 client.on("ready", () => {
   console.log("Reddicord Activated");
-  globalreacts = 323;
+  globalreacts = 0;
   if(myEnmap.isReady) { 
   console.log("Data Ready");
   }else {
@@ -107,7 +107,7 @@ if (message.attachments.size > 0) {
   }else
 if (message.content.startsWith(prefix + "ping")) {
   responsetime = new Date().getTime() - message.createdTimestamp
-  message.channel.send("Pong! There have been "+ globalreacts +" reacts made to date. Response Time: " + responsetime + " ms");
+  message.channel.send("Pong! There have been "+ globalreacts +" reacts made today. Response Time: " + responsetime + " ms");
   console.log("Pinged");
   }else
   if (message.content.startsWith(prefix + "creator")) {
@@ -149,11 +149,12 @@ if (message.content.startsWith(prefix + "ping")) {
     message.react("🔼");
   }else
   if(message.content.startsWith(prefix + "guild")){
+    const filtered = client.karma.array();
     const filtered = client.karma.filter( p => p.guild === message.guild.id ).array();
     const sorted = filtered.sort((b, a) => a.karma - b.karma);
     const top = sorted.splice(0,10);
     const embed = new Discord.RichEmbed()
-      .setTitle("Karma Leaderboard- Resets every day")
+      .setTitle("Guild Karma Leaderboard- Resets every day")
       .setAuthor(client.user.username, client.user.avatarURL)
       .setColor(16777215);
     for(const data of top) {
