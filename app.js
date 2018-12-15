@@ -90,7 +90,7 @@ client.on('messageReactionRemove', (reaction, user, message) => {
         client.karma.inc(key, "karma");
     }
 });
-const prefix = "&&"
+const prefix = "!&"
 client.on("message", (message) => {
 function react() {
   message.react("🔽");
@@ -150,7 +150,7 @@ if (message.content.startsWith(prefix + "ping")) {
   }else
   if(message.content.startsWith(prefix + "guild")){
     const filtered = client.karma.filter( p => p.guild === message.guild.id ).array();
-    const sorted = filtered.sort((b, a) => a.karma - b.karma);
+    const sorted = filtered.sort((a, b) => a.karma - b.karma);
     const top = sorted.splice(0,10);
     const embed = new Discord.RichEmbed()
       .setTitle("Guild Karma Leaderboard- Resets every day")
