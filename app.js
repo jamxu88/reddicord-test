@@ -17,7 +17,7 @@ client.on("ready", () => {
 client.on('messageReactionAdd', (reaction, user, message, guild) => {
   if(reaction.emoji.name === "🔼") {
     if (user.id === reaction.message.author.id) {
-      const key = `${reaction.message.author.id}`;
+      const key = `${message.guild.id}-${reaction.message.author.id}`;
         client.karma.ensure(key, {
         user: reaction.message.author.id,
         guild: message.guild.id,
@@ -27,7 +27,7 @@ client.on('messageReactionAdd', (reaction, user, message, guild) => {
       }else
         console.log(reaction.message.author.id);
         globalreacts += 1;
-        const key = `${reaction.message.author.id}`;
+        const key = `${message.guild.id}-${reaction.message.author.id}`;
           client.karma.ensure(key, {
           user: reaction.message.author.id,
           guild: message.guild.id,
@@ -37,7 +37,7 @@ client.on('messageReactionAdd', (reaction, user, message, guild) => {
   }else
   if(reaction.emoji.name === "🔽") {
     if (user.id === reaction.message.author.id) {
-      const key = `${reaction.message.author.id}`;
+      const key = `${message.guild.id}-${reaction.message.author.id}`;
       client.karma.ensure(key, {
         user: reaction.message.author.id,
         guild: message.guild.id,
@@ -47,7 +47,7 @@ client.on('messageReactionAdd', (reaction, user, message, guild) => {
     }else
       console.log(reaction.message.author.id);
       globalreacts += 1;
-      const key = `${reaction.message.author.id}`;
+      const key = `${message.guild.id}-${reaction.message.author.id}`;
         client.karma.ensure(key, {
         user: reaction.message.author.id,
         guild: message.guild.id,
@@ -59,7 +59,7 @@ client.on('messageReactionAdd', (reaction, user, message, guild) => {
 client.on('messageReactionRemove', (reaction, user, message, guild) => {
     if(reaction.emoji.name === "🔼") {
       if (user.id === reaction.message.author.id) {
-        const key = `${reaction.message.author.id}`;
+        const key = `${message.guild.id}-${reaction.message.author.id}`;
         client.karma.ensure(key, {
           user: reaction.message.author.id,
           guild: message.guild.id,
@@ -69,7 +69,7 @@ client.on('messageReactionRemove', (reaction, user, message, guild) => {
       }else
         globalreacts -= 1;
         console.log(reaction.message.author.id);
-        const key = `${reaction.message.author.id}`;
+        const key = `${message.guild.id}-${reaction.message.author.id}`;
           client.karma.ensure(key, {
           user: reaction.message.author.id,
           guild: message.guild.id,
@@ -79,7 +79,7 @@ client.on('messageReactionRemove', (reaction, user, message, guild) => {
     }else
     if(reaction.emoji.name === "🔽") {
       if (user.id === reaction.message.author.id) {
-        const key = `${reaction.message.author.id}`;
+        const key = `${message.guild.id}-${reaction.message.author.id}`;
         client.karma.ensure(key, {
           user: reaction.message.author.id,
           guild: message.guild.id,
@@ -89,7 +89,7 @@ client.on('messageReactionRemove', (reaction, user, message, guild) => {
       }else
         globalreacts -= 1;
         console.log(reaction.message.author.id);
-        const key = `${reaction.message.author.id}`;
+        const key = `${message.guild.id}-${reaction.message.author.id}`;
           client.karma.ensure(key, {
           user: reaction.message.author.id,
           guild: message.guild.id,
