@@ -149,7 +149,6 @@ if (message.content.startsWith(prefix + "ping")) {
     message.react("🔼");
   }else
   if(message.content.startsWith(prefix + "guild")){
-    const filtered = client.karma.array();
     const filtered = client.karma.filter( p => p.guild === message.guild.id ).array();
     const sorted = filtered.sort((b, a) => a.karma - b.karma);
     const top = sorted.splice(0,10);
