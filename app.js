@@ -119,7 +119,7 @@ if (message.content.startsWith(prefix + "ping")) {
   if (message.content.startsWith(prefix + "karma")) {
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
-  let member = message.mentions.users.first();
+  let member = message.mentions.members.first();
   if (member == "") {
     const key = `${message.author.id}`;
   }else{
