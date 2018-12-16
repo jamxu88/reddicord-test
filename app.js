@@ -126,10 +126,10 @@ if (message.content.startsWith(prefix + "ping")) {
     const key = `${member.id}`
   }
   try {
-    message.channel.send(`You currently have ${client.karma.get(key, "karma")} karma. This will reset every day.`);
+    message.channel.send(`${key} currently has ${client.karma.get(key, "karma")} karma. This will reset every day.`);
     }
   catch(EnmapPathError) {
-    message.channel.send("You currently have no karma!")
+    message.channel.send(`${key} currently has no karma!`)
   }
   }else
   if (message.content.startsWith(prefix + "leaderboard")) {
