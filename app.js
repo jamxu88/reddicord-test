@@ -123,7 +123,7 @@ if (message.content.startsWith(prefix + "ping")) {
   if (member == "") {
     const key = `${message.author.id}`;
   }else{
-    const key = `${member.user.id}`
+    const key = `${member.id}`
   }
   try {
     message.channel.send(`You currently have ${client.karma.get(key, "karma")} karma. This will reset every day.`);
