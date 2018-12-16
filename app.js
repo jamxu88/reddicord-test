@@ -120,7 +120,7 @@ if (message.content.startsWith(prefix + "ping")) {
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   let member = message.mentions.members.first();
-  if (memeber == "") {
+  if (member == "") {
     const key = `${message.author.id}`;
   }else{
     const key = `${member.user.id}`
