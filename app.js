@@ -14,93 +14,83 @@ client.on("ready", () => {
   console.log("Data Not Loaded");
   }
 });
-client.on('messageReactionAdd', (reaction, user, message, guild) => {
+client.on('messageReactionAdd', (reaction, user, message) => {
   if(reaction.emoji.name === "🔼") {
     if (user.id === reaction.message.author.id) {
-      if (message.guild){
-        const key = `${message.guild.id}-${reaction.message.author.id}`;
-          client.karma.ensure(key, {
-          user: reaction.message.author.id,
-          guild: message.guild.id,
-          karma: 0
-        });
-        client.karma.dec(key, "karma");
-      }
+      const key = `${reaction.message.author.id}`;
+        client.karma.ensure(key, {
+        user: reaction.message.author.id,
+        karma: 0
+      });
+      client.karma.dec(key, "karma");
       }else
         console.log(reaction.message.author.id);
         globalreacts += 1;
-        const key = `${message.guild.id}-${reaction.message.author.id}`;
+        const key = `${reaction.message.author.id}`;
           client.karma.ensure(key, {
           user: reaction.message.author.id,
-          guild: message.guild.id,
           karma: 0
         });
         client.karma.inc(key, "karma");
   }else
   if(reaction.emoji.name === "🔽") {
     if (user.id === reaction.message.author.id) {
-      const key = `${message.guild.id}-${reaction.message.author.id}`;
+      const key = `${reaction.message.author.id}`;
       client.karma.ensure(key, {
         user: reaction.message.author.id,
-        guild: message.guild.id,
         karma: 0
       });
       client.karma.inc(key, "karma");
     }else
       console.log(reaction.message.author.id);
       globalreacts += 1;
-      const key = `${message.guild.id}-${reaction.message.author.id}`;
+      const key = `${reaction.message.author.id}`;
         client.karma.ensure(key, {
         user: reaction.message.author.id,
-        guild: message.guild.id,
         karma: 0
       });
       client.karma.dec(key, "karma");
   } 
 });
-client.on('messageReactionRemove', (reaction, user, message, guild) => {
+client.on('messageReactionRemove', (reaction, user, message) => {
     if(reaction.emoji.name === "🔼") {
       if (user.id === reaction.message.author.id) {
-        const key = `${message.guild.id}-${reaction.message.author.id}`;
+        const key = `${reaction.message.author.id}`;
         client.karma.ensure(key, {
           user: reaction.message.author.id,
-          guild: message.guild.id,
           karma: 0
         });
         client.karma.inc(key, "karma");
       }else
         globalreacts -= 1;
         console.log(reaction.message.author.id);
-        const key = `${message.guild.id}-${reaction.message.author.id}`;
+        const key = `${reaction.message.author.id}`;
           client.karma.ensure(key, {
           user: reaction.message.author.id,
-          guild: message.guild.id,
           karma: 0
         });
         client.karma.dec(key, "karma");
     }else
     if(reaction.emoji.name === "🔽") {
       if (user.id === reaction.message.author.id) {
-        const key = `${message.guild.id}-${reaction.message.author.id}`;
+        const key = `${reaction.message.author.id}`;
         client.karma.ensure(key, {
           user: reaction.message.author.id,
-          guild: message.guild.id,
           karma: 0
         });
         client.karma.dec(key, "karma");
       }else
         globalreacts -= 1;
         console.log(reaction.message.author.id);
-        const key = `${message.guild.id}-${reaction.message.author.id}`;
+        const key = `${reaction.message.author.id}`;
           client.karma.ensure(key, {
           user: reaction.message.author.id,
-          guild: message.guild.id,
           karma: 0
         });
         client.karma.inc(key, "karma");
     }
 });
-const prefix = "&&"
+const prefix = "&"
 client.on("message", (message) => {
 function react() {
   message.react("🔽");
@@ -127,10 +117,17 @@ if (message.content.startsWith(prefix + "ping")) {
     message.channel.send("<https://github.com/jamxu88/Reddicord>");
   }else
   if (message.content.startsWith(prefix + "karma")) {
-  const key = `${message.author.id}`;
+  const args = message.content.slice(prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
+  let member = message.mentions.members.first();
+  if (memeber == "") {
+    const key = `${message.author.id}`;
+  }else{
+    const key = `${member.user.id}`
+  }
   try {
     message.channel.send(`You currently have ${client.karma.get(key, "karma")} karma. This will reset every day.`);
-  }
+    }
   catch(EnmapPathError) {
     message.channel.send("You currently have no karma!")
   }
@@ -151,25 +148,12 @@ if (message.content.startsWith(prefix + "ping")) {
   if (message.content.startsWith(prefix + "help")) {
     message.channel.send({embed: {
     color: 16777215,
-    description: "**Prefix**: `"+prefix+"` \n **General Commands**: \n `ping`- Ping the bot \n `creator`- Creator of this bot! \n `github`- View this bot's source code \n \n**Karma Commands**: \n `karma`- Check your karma \n `leaderboard`- Check the top 10 Karma Holders \n `guild`- Check your top Guild Karma Holders \n \n **How do I get Karma?**- Just post an image, gif, or video in a text channel with reactions enabled, and get some upvotes. Posting a link or joke? Just start your message with `'` (single quote) \n Karma will reset once a day."
+    description: "**Prefix**: `"+prefix+"` \n **General Commands**: \n `ping`- Ping the bot \n `creator`- Creator of this bot! \n `github`- View this bot's source code \n \n**Karma Commands**: \n `karma`- Check your karma \n `leaderboard`- Check the top 10 Karma Holders \n \n**How do I get Karma?**- Just post an image, gif, or video in a text channel with reactions enabled, and get some upvotes. Posting a link or joke? Just start your message with `'` (single quote) \n Karma will reset once a day."
     }});
   }else
   if (message.content.includes('https://')) {
     setTimeout(react,500);
     message.react("🔼");
-  }else
-  if(message.content.startsWith(prefix + "guild")){
-    const filtered = client.karma.filter( karma => karma.guild === message.guild.id ).array();
-    const sorted = filtered.sort((a, b) => a.karma - b.karma);
-    const top = sorted.splice(0,10);
-    const embed = new Discord.RichEmbed()
-      .setTitle("Guild Karma Leaderboard- Resets every day")
-      .setAuthor(client.user.username, client.user.avatarURL)
-      .setColor(16777215);
-    for(const data of top) {
-      embed.addField(client.users.get(data.user).tag, `${data.karma} karma`);
-    }
-    return message.channel.send({embed});  
   }
 });
 client.login(process.env.BOT_TOKEN);
